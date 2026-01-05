@@ -10,9 +10,20 @@ import { SolanaWallet } from "./components/SolanaWallet";
 import { EthWallet } from "./components/EthWallet";
 import { CopyButton } from "./components/CopyButton";
 import Search from "./components/Search";
+import SearchResult from "./components/SearchResult";
 
 function App() {
   const [mnemonic, setMnemonic] = useState("");
+
+  const [searchState, setSearchState] = useState({
+    result: null,
+    loading: false,
+    error: null,
+  });
+
+  const handleSearchResult = (newState) => {
+    setSearchState((prev) => ({ ...prev, ...newState }));
+  };
 
   return (
     <div className="app-container">
@@ -20,7 +31,8 @@ function App() {
         <h1>Web3 Vault</h1>
         <p>Securely generate, manage and Search Solana wallets</p>
       </header>
-      <Search />
+      <Search onSearchResult={handleSearchResult} />
+      <SearchResult {...searchState} />
       <main className="action-section">
         <button
           className="btn-primary"

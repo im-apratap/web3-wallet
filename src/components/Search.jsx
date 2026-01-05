@@ -2,17 +2,12 @@ import React, { useState } from "react";
 import dotenv from "dotenv";
 dotenv.config({ quiet: true });
 
-const Search = () => {
+const Search = ({ onSearchResult }) => {
   const [value, setValue] = useState("");
-  const [result, setResult] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
 
   async function handleSubmit(e) {
     e.preventDefault();
-    setLoading(true);
-    setError(null);
-    setResult(null);
+    onSearchResult({ loading: true, error: null, result: null });
     try {
       const response = await fetch(import.meta.env.VITE_API_URL, {
         method: "POST",
@@ -30,11 +25,9 @@ const Search = () => {
         throw new Error("Request failed");
       }
       const data = await response.json();
-      setResult(data);
+      onSearchResult({ loading: false, result: data, error: null });
     } catch (error) {
-      setError(error.message);
-    } finally {
-      setLoading(false);
+      onSearchResult({ loading: false, error: error.message, result: null });
     }
   }
 
@@ -52,10 +45,6 @@ const Search = () => {
         <button className="btn-primary" type="submit">
           Search
         </button>
-
-        {loading && <div>Loading</div>}
-        {error && <div>{error}</div>}
-        {result && <pre>{JSON.stringify(result, null, 2)}</pre>}
       </form>
     </div>
   );

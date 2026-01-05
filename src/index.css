@@ -4,6 +4,15 @@
   padding: 0;
 }
 
+:root {
+  --font-main: "Inter", system-ui, -apple-system, sans-serif;
+  --bg-primary: #000000;
+  --text-primary: #ffffff;
+  --text-secondary: #94a3b8;
+  --accent-primary: #1db3a4;
+  --border-color: rgba(255, 255, 255, 0.1);
+}
+
 body {
   font-family: var(--font-main);
   background: #000000;
@@ -17,5 +26,4 @@ button {
   border: none;
   background: none;
   color: aqua;
-  
 }
