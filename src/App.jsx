@@ -9,6 +9,7 @@ import "./App.css";
 import { SolanaWallet } from "./components/SolanaWallet";
 import { EthWallet } from "./components/EthWallet";
 import { CopyButton } from "./components/CopyButton";
+import Search from "./components/Search";
 
 function App() {
   const [mnemonic, setMnemonic] = useState("");
@@ -17,9 +18,9 @@ function App() {
     <div className="app-container">
       <header className="header">
         <h1>Web3 Vault</h1>
-        <p>Securely generate and manage your Solana wallets</p>
+        <p>Securely generate, manage and Search Solana wallets</p>
       </header>
-
+      <Search />
       <main className="action-section">
         <button
           className="btn-primary"
