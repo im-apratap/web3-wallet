@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import dotenv from "dotenv";
+import { getSolanaBalance } from "../utils/solanaBalance";
+import toast from "react-hot-toast";
 dotenv.config({ quiet: true });
 
 const Search = ({ onSearchResult }) => {
@@ -9,23 +11,19 @@ const Search = ({ onSearchResult }) => {
     e.preventDefault();
     onSearchResult({ loading: true, error: null, result: null });
     try {
-      const response = await fetch(import.meta.env.VITE_API_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          jsonrpc: "2.0",
-          id: 1,
-          method: "getBalance",
-          params: [value, { encoding: "jsonParsed" }],
-        }),
-      });
-      if (!response.ok) {
-        throw new Error("Request failed");
+      const data = await getSolanaBalance(value);
+
+      if (data.error) {
+        toast.error("Invalid Address");
+        onSearchResult({
+          loading: false,
+          error: "Invalid Address",
+          result: null,
+        });
+      } else {
+        toast.success("Balance fetched successfully");
+        onSearchResult({ loading: false, result: data, error: null });
       }
-      const data = await response.json();
-      onSearchResult({ loading: false, result: data, error: null });
     } catch (error) {
       onSearchResult({ loading: false, error: error.message, result: null });
     }

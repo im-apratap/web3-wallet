@@ -106,7 +106,28 @@
   border-radius: 1rem;
   padding: 1.5rem;
   margin-bottom: 1.5rem;
-  transition: transform 0.3s ease, border-color 0.3s;
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s;
+}
+
+.wallet-card-balance {
+  background: #284950;
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto; /* center horizontally */
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .wallet-card:hover {
@@ -191,7 +212,8 @@
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 

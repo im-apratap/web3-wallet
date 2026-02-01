@@ -1,18 +1,19 @@
-import React from "react";
-
 const SearchResult = ({ loading, error, result }) => {
   return (
     <div className="result-container">
-      {loading && <div>Loading...</div>}
+      {loading && <p>Loading...</p>}
 
-      {error && (
-        <div className="error-text" style={{ color: "red" }}>
-          {error}
+      {error && <p className="error-text">{error}</p>}
+
+      {result?.result?.value && (
+        <div className="wallet-card-balance result-card">
+          <div className="balance-display">
+            <span className="balance-amount">
+              {result.result.value / 1000000000}
+            </span>
+            <span className="balance-unit">SOL</span>
+          </div>
         </div>
-      )}
-
-      {result && (
-        <pre className="json-output">{JSON.stringify(result, null, 2)}</pre>
       )}
     </div>
   );

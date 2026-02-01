@@ -4,16 +4,19 @@ window.process = window.process || { env: {}, browser: true, version: "" };
 window.global = window.global || window;
 
 import { useState } from "react";
-import { generateMnemonic } from "bip39";
+import { generateMnemonic, validateMnemonic } from "bip39";
 import "./App.css";
 import { SolanaWallet } from "./components/SolanaWallet";
-import { EthWallet } from "./components/EthWallet";
+// import { EthWallet } from "./components/EthWallet";
 import { CopyButton } from "./components/CopyButton";
 import Search from "./components/Search";
 import SearchResult from "./components/SearchResult";
+import toast, {Toaster} from "react-hot-toast"
 
 function App() {
   const [mnemonic, setMnemonic] = useState("");
+  const [inputMnemonic, setInputMnemonic] = useState("");
+  const [showInput, setShowInput] = useState(false);
 
   const [searchState, setSearchState] = useState({
     result: null,
@@ -25,6 +28,16 @@ function App() {
     setSearchState((prev) => ({ ...prev, ...newState }));
   };
 
+  const inputSeedPhrase = () => {
+    if (validateMnemonic(inputMnemonic.trim())) {
+      toast.success("Seed phrase imported successfully");
+      setMnemonic(inputMnemonic.trim());
+      setShowInput(false);
+    } else {
+      toast.error("Invalid mnemonic phrase")
+    }
+  };
+
   return (
     <div className="app-container">
       <header className="header">
@@ -34,11 +47,36 @@ function App() {
       <Search onSearchResult={handleSearchResult} />
       <SearchResult {...searchState} />
       <main className="action-section">
+        {showInput ? (
+          <div style={{ display: "flex", gap: "10px", width: "80%" }} >
+            <input
+              value={inputMnemonic}
+              onChange={(e) => setInputMnemonic(e.target.value)}
+              placeholder="Enter Your Existing Seed Phrase"
+              className="input-search"
+              style={{ border: "1px solid white" }}
+            />
+            <button onClick={inputSeedPhrase} className="btn-primary">
+              Open Wallet
+            </button>
+          </div>
+        ) : (
+          <button
+            className="btn-primary"
+            onClick={() => {
+              setShowInput(true);
+            }}
+          >
+            Enter you existing Seed Phrase
+          </button>
+        )}
+        <Toaster/>
+
         <button
           className="btn-primary"
           onClick={() => setMnemonic(generateMnemonic())}
         >
-          {mnemonic ? "Regenerate Mnemonic" : "Create Seed Phrase"}
+          {mnemonic ? "Regenerate Mnemonic" : "Create New Seed Phrase"}
         </button>
 
         {mnemonic && (

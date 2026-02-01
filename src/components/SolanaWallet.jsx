@@ -6,6 +6,7 @@ import nacl from "tweetnacl";
 import bs58 from "bs58";
 import SensitiveText from "./SensitiveText";
 import { CopyButton } from "./CopyButton";
+import WalletCard from "./WalletCard";
 
 export function SolanaWallet({ mnemonic }) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -50,29 +51,7 @@ export function SolanaWallet({ mnemonic }) {
       </div>
 
       {wallets.map((w, i) => (
-        <div key={w.publicKey.toBase58()} className="wallet-card">
-          <div className="wallet-info-row">
-            <span className="wallet-label">Wallet {i + 1}</span>
-          </div>
-
-          <div className="wallet-info-row">
-            <span className="wallet-label">Public Key</span>
-            <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
-              <span className="wallet-value">{w.publicKey.toBase58()}</span>
-              <CopyButton text={w.publicKey.toBase58()} />
-            </div>
-          </div>
-
-          <div className="wallet-info-row">
-            <span className="wallet-label">Private Key</span>
-            <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
-              <div className="sensitive-container" style={{ flex: 1 }}>
-                <SensitiveText text={bs58.encode(w.secretKey)} />
-              </div>
-              <CopyButton text={bs58.encode(w.secretKey)} />
-            </div>
-          </div>
-        </div>
+        <WalletCard key={w.publicKey.toBase58()} wallet={w} i={i}/>
       ))}
     </div>
   );
