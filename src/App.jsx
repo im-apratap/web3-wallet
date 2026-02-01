@@ -43,14 +43,14 @@ function App() {
     <div className="app-container">
       <header className="header">
         <h1>Web3 Vault</h1>
-        <p>Securely generate, manage and Search Solana wallets</p>
+        <p>Manage, Track and Swap securely on Solana</p>
       </header>
       <Search onSearchResult={handleSearchResult} />
       <SearchResult {...searchState} />
       <SwapComponent />
       <main className="action-section">
         {showInput ? (
-          <div style={{ display: "flex", gap: "10px", width: "80%" }} >
+          <div style={{ display: "flex", gap: "10px", width: "80%" }}>
             <input
               value={inputMnemonic}
               onChange={(e) => setInputMnemonic(e.target.value)}
@@ -72,7 +72,7 @@ function App() {
             Enter you existing Seed Phrase
           </button>
         )}
-        <Toaster/>
+        <Toaster />
 
         <button
           className="btn-primary"
