@@ -12,6 +12,7 @@ import { CopyButton } from "./components/CopyButton";
 import Search from "./components/Search";
 import SearchResult from "./components/SearchResult";
 import toast, {Toaster} from "react-hot-toast"
+import { SwapComponent } from "./components/SwapComponent";
 
 function App() {
   const [mnemonic, setMnemonic] = useState("");
@@ -46,6 +47,7 @@ function App() {
       </header>
       <Search onSearchResult={handleSearchResult} />
       <SearchResult {...searchState} />
+      <SwapComponent />
       <main className="action-section">
         {showInput ? (
           <div style={{ display: "flex", gap: "10px", width: "80%" }} >
