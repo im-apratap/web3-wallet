@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { mnemonicToSeedSync } from "bip39";
 import { derivePath } from "ed25519-hd-key";
 import { Keypair } from "@solana/web3.js";
@@ -11,6 +11,11 @@ import WalletCard from "./WalletCard";
 export function SolanaWallet({ mnemonic }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [wallets, setWallets] = useState([]);
+
+  useEffect(()=>{
+    setWallets([])
+    setCurrentIndex(0)
+  },[mnemonic])
 
   const seed = useMemo(() => mnemonicToSeedSync(mnemonic), [mnemonic]);
 
